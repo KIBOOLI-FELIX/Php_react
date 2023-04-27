@@ -1,4 +1,5 @@
 import { useRef } from "react"
+import ViewEmployees from "./ViewEmployees";
 
 export default function AddEmployee(){
   //getting input data from the form
@@ -22,6 +23,11 @@ export default function AddEmployee(){
     }
     // console.log(employeeData)
   }
+
+  //function to show employee data
+  const showEmployee=()=>{
+    alert("God is good");
+  }
   return(
     <div className="container mt-3">
       <div className="card">
@@ -29,9 +35,14 @@ export default function AddEmployee(){
           <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Add New Employee
           </button>
-          <button type="button" className="btn btn-secondary">View Employees</button>
+          <button type="button" className="btn btn-secondary"
+            onClick={showEmployee}
+          >
+            View Employees
+          </button>
         </div>
         <div className="card-body">
+          <ViewEmployees/>
             <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className="modal-dialog">
               <div className="modal-content">
