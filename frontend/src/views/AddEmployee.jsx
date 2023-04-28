@@ -1,44 +1,40 @@
-import { useRef,useEffect } from "react"
+import {useState,useEffect} from "react"
 import ViewEmployees from "./ViewEmployees";
 import axiosClient from "../axio_client";
 
 
 export default function AddEmployee(){
-  //getting input data from the form
-  const fullNameRef=useRef();
-  const phyAddressRef=useRef();
-  const emailAddressRef=useRef();
-  const phoneContactRef=useRef();
-  const jobTitleRef=useRef();
-  const salaryRef=useRef();
+  const[payload,setPayload]=useState([]);
 
-  // useEffect(()=>{
-  //   handleData();
-  // },[]);
- 
-  //function to handle data
+  //employee data
+  useEffect(()=>{
+    getEmployee();
+  },[])
+
+  //function to collecte data
+  const getData=(event)=>{
+    const field_name=event.target.name;
+    const value=event.target.value;
+    setPayload((values)=>({...values,[field_name]:value}));
+  }
+  //function to handle send data
   const handleData=()=>{
-    
-    const payload={
-      fullName:fullNameRef.current.value,
-      physicalAddress:phyAddressRef.current.value,
-      emailAddress:emailAddressRef.current.value,
-      phoneContact:phoneContactRef.current.value,
-      jobTitle:jobTitleRef.current.value,
-      salary:salaryRef.current.value,
-    }
     console.log(payload)
     //sending data to the api
-    axiosClient.post("/post",payload)
-    .then((response)=>console.log(response))
+    axiosClient.post("/post.php",payload)
+    .then((response)=>console.log(response.data))
     .catch((error)=>console.log(error));
  
   }
 
-  //function to show employee data
-  // const showEmployee=()=>{
-  //   alert("God is good");
-  // }
+  //getdata
+  const getEmployee=()=>{
+    axiosClient.get("/get")
+    .then((response)=>console.log(response.data))
+    .catch((error)=>console.log(error))
+  }
+
+
   return(
     <div className="container mt-3">
       <div className="card">
@@ -63,31 +59,43 @@ export default function AddEmployee(){
                   <form>
                     <div className="row">
                       <div className="form-floating mb-3 col-6">
-                        <input type="email" ref={fullNameRef} className="form-control form-control-sm" id="floatingInput"/>
+                        <input type="email" name="fullName" className="form-control form-control-sm" id="floatingInput"
+                          onChange={getData}
+                        />
                         <label htmlFor="floatingInput">Full Name</label>
                       </div>
                       <div className="form-floating col-6">
-                        <input type="password" ref={phyAddressRef} className="form-control" id="floatingPassword"/>
-                        <label htmlFor="floatingPassword">Physical Address</label>
+                        <input type="text" name="phyAddress" className="form-control" id="floatingAddress"
+                          onChange={getData}
+                        />
+                        <label htmlFor="floatingAddress">Physical Address</label>
                       </div>
                     </div>
                     <div className="row">
                       <div className="form-floating mb-3 col-6">
-                        <input type="email" ref={emailAddressRef} className="form-control" id="floatingInput"/>
+                        <input type="email" name="emailAddress" className="form-control" id="floatingInput"
+                          onChange={getData}
+                        />
                         <label htmlFor="floatingInput">Email address</label>
                       </div>
                       <div className="form-floating col-6">
-                        <input type="password" ref={phoneContactRef} className="form-control" id="floatingPassword"/>
-                        <label htmlFor="floatingPassword">Phone Contact</label>
+                        <input type="text" name="phoneContact" className="form-control" id="floatingContact"
+                          onChange={getData}
+                        />
+                        <label htmlFor="floatingContact">Phone Contact</label>
                       </div>
                     </div>
                     <div className="row">
                       <div className="form-floating mb-3 col-6">
-                        <input type="email" ref={jobTitleRef} className="form-control" id="floatingInput"/>
+                        <input type="text" name="jobTitle" className="form-control" id="floatingInput"
+                          onChange={getData}
+                        />
                         <label htmlFor="floatingInput">Job Title</label>
                       </div>
                       <div className="form-floating col-6">
-                        <input type="password" ref={salaryRef} className="form-control" id="floatingPassword"/>
+                        <input type="text" name="salary" className="form-control" id="floatingPassword"
+                          onChange={getData}
+                        />
                         <label htmlFor="floatingPassword">Salary</label>
                       </div>
                     </div>
