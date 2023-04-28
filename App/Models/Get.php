@@ -1,15 +1,25 @@
 <?php
+
 namespace App\Models;
-require "Database/Dbconnect.php";
 use App\Database\Database;
 class Get {
   //database connection 
-  private $conn=(new Database())->connect();
+  private $conn;
+  public function __construct(){
+    $this->conn=new Database();
+  }
 
   public function getData(){
-    $query="SELECT * FROM employees";
-    $stmt=$this->conn->prepare($query);
+    $query="SELECT * FROM members";
+    $stmt=$this->conn->connect()->prepare($query);
     $stmt->execute();
-    return $stmt;
+    //checking if any results are found or not
+    if($stmt->rowCount()>0){
+      $rows=$stmt->fetchAll();
+      return $rows;
+    }else{
+      return "No records found in the database";
+    }
+    
   }
 }

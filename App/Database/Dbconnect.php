@@ -3,7 +3,7 @@ namespace App\Database;
 class Database {
   //setting up database connection variables
   private $host='localhost';
-  private $dbname='react_crud';
+  private $dbname='factory';
   private $username='root';
   private $password='root';
   private $charset='utf8mb4';

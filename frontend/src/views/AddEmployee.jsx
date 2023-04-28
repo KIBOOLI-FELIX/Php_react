@@ -1,5 +1,7 @@
-import { useRef } from "react"
+import { useRef,useEffect } from "react"
 import ViewEmployees from "./ViewEmployees";
+import axiosClient from "../axio_client";
+
 
 export default function AddEmployee(){
   //getting input data from the form
@@ -9,11 +11,15 @@ export default function AddEmployee(){
   const phoneContactRef=useRef();
   const jobTitleRef=useRef();
   const salaryRef=useRef();
+
+  // useEffect(()=>{
+  //   handleData();
+  // },[]);
  
   //function to handle data
   const handleData=()=>{
-    // alert(`God is great`)
-    const employeeData={
+    
+    const payload={
       fullName:fullNameRef.current.value,
       physicalAddress:phyAddressRef.current.value,
       emailAddress:emailAddressRef.current.value,
@@ -21,13 +27,18 @@ export default function AddEmployee(){
       jobTitle:jobTitleRef.current.value,
       salary:salaryRef.current.value,
     }
-    // console.log(employeeData)
+    console.log(payload)
+    //sending data to the api
+    axiosClient.post("/post",payload)
+    .then((response)=>console.log(response))
+    .catch((error)=>console.log(error));
+ 
   }
 
   //function to show employee data
-  const showEmployee=()=>{
-    alert("God is good");
-  }
+  // const showEmployee=()=>{
+  //   alert("God is good");
+  // }
   return(
     <div className="container mt-3">
       <div className="card">
@@ -35,9 +46,7 @@ export default function AddEmployee(){
           <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Add New Employee
           </button>
-          <button type="button" className="btn btn-secondary"
-            onClick={showEmployee}
-          >
+          <button type="button" className="btn btn-secondary">
             View Employees
           </button>
         </div>
