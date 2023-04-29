@@ -10,7 +10,7 @@ class Get {
   }
 
   public function getData(){
-    $query="SELECT * FROM members";
+    $query="SELECT * FROM employees";
     $stmt=$this->conn->connect()->prepare($query);
     $stmt->execute();
     //checking if any results are found or not

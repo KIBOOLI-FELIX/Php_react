@@ -2,12 +2,7 @@
 namespace App\Models;
 use App\Database\Database;
 class Post {
-  //employee params
-  // public $fullname;
-  // public $phyAddress;
-  // public $phoneContact;
-  // public $jobtitle;
-  // public $salary;
+
   public $post;
   private $conn;
   public function __construct($postData){
@@ -27,10 +22,11 @@ class Post {
     $stmt->bindParam(5,$data['jobTitle'],\PDO::PARAM_STR);
     $stmt->bindParam(6,$data['salary'],\PDO::PARAM_STR);
 
+
     if( $stmt->execute()){
-      $response=json_encode(['status'=>'success','message'=>'User Added']);
+      $response=json_encode(['status'=>'success','message'=>'Employee Added']);
     }else{
-      $response=json_encode(['status'=>'error','message'=>'Failed to Add User']);
+      $response=json_encode(['status'=>'error','message'=>'Failed to Add Employee']);
     }
     return $response;
    

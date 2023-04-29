@@ -5,13 +5,9 @@ import axiosClient from "../axio_client";
 
 export default function AddEmployee(){
   const[payload,setPayload]=useState([]);
+  const[message,setMessage]=useState({});
 
-  //employee data
-  useEffect(()=>{
-    getEmployee();
-  },[])
-
-  //function to collecte data
+  //function to collect data
   const getData=(event)=>{
     const field_name=event.target.name;
     const value=event.target.value;
@@ -21,18 +17,15 @@ export default function AddEmployee(){
   const handleData=()=>{
     console.log(payload)
     //sending data to the api
-    axiosClient.post("/post.php",payload)
-    .then((response)=>console.log(response.data))
+    axiosClient.post("/api",payload)
+    .then((response)=>{
+      console.log(response.data)
+      setMessage(response.data);
+    })
     .catch((error)=>console.log(error));
  
   }
 
-  //getdata
-  const getEmployee=()=>{
-    axiosClient.get("/get")
-    .then((response)=>console.log(response.data))
-    .catch((error)=>console.log(error))
-  }
 
 
   return(
@@ -102,6 +95,7 @@ export default function AddEmployee(){
                   </form>
                 </div>
                 <div className="modal-footer">
+                  <span className="text-success">{message.message}</span>
                   <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                   <button type="button" className="btn btn-primary"
                     onClick={handleData}
