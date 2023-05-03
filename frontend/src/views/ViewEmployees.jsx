@@ -1,5 +1,8 @@
+import { Link } from "react-router-dom";
 import { useEffect,useState} from "react";
 import axiosClient from "../axio_client";
+
+
 const ViewEmployees=()=>{
 const [employees,setEmployees]=useState([]);
   
@@ -43,8 +46,8 @@ const [employees,setEmployees]=useState([]);
               <td>{employee.phoneContact}</td>
               <td>{employee.physicalAddress}</td>
               <td className="d-flex justify-content-between">
-              <button type="button" className="btn btn-warning btn-sm">Edit</button>
-              <button type="button" className="btn btn-danger btn-sm">Delete</button>
+              <Link to={`employ/${employee.id}/edit`} className="btn btn-warning btn-sm">Edit</Link>
+              <Link to={`employ/${employee.id}/delete`} className="btn btn-danger btn-sm">Delete</Link>
               </td>
             </tr>
             )

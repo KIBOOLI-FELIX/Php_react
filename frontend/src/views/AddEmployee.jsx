@@ -1,4 +1,4 @@
-import {useState,useEffect} from "react"
+import {useState} from "react"
 import ViewEmployees from "./ViewEmployees";
 import axiosClient from "../axio_client";
 
@@ -30,6 +30,7 @@ export default function AddEmployee(){
 
   return(
     <div className="container mt-3">
+  
       <div className="card">
         <div className="card-header d-flex justify-content-between">
           <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -40,7 +41,7 @@ export default function AddEmployee(){
           </button>
         </div>
         <div className="card-body">
-          <ViewEmployees/>
+           <ViewEmployees/>
             <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className="modal-dialog">
               <div className="modal-content">
