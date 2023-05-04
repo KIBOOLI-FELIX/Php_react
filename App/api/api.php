@@ -17,9 +17,17 @@ use App\Controllers\GetController;
 $req_method=$_SERVER['REQUEST_METHOD'];
 switch($req_method){
   case "GET":
-    $result=new GetController();
-    $data=$result->retrieveData();
-    echo json_encode($data);
+    if(isset($_GET['id'])){
+      // echo $_GET['id'];
+      $result=new GetController($_GET['id']);
+      $data=$result->retrieveData();
+      echo json_encode($data);
+    }else{
+       //data for all users
+      $result=new GetController(null);
+      $data=$result->retrieveData();
+      echo json_encode($data);
+    }
     break;
   case "POST":
     //getting data from the post request
