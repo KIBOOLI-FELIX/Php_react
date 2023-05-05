@@ -1,11 +1,12 @@
 import { useEffect,useState} from "react";
 import axiosClient from "../axio_client";
-import { useParams } from "react-router-dom";
+import { useParams,Link} from "react-router-dom";
+import AddEmployee from "./AddEmployee";
 
  const  EditEmployee=()=>{
 
   const [employees,setEmployees]=useState(null);
-  // const [update,setUpdate]=useState([]);
+  const [message,setMessage]=useState(null);
   
     useEffect(()=>{
       getEmployee();
@@ -30,11 +31,24 @@ import { useParams } from "react-router-dom";
   }
   //function to handle data
   const handleData=()=>{
-    console.log(update);
+    console.log(employees);
+       //sending updated data to the api
+     axiosClient.put("/api",employees)
+      .then((response)=>{
+       console.log(response.data)
+         setMessage(response.data);
+      })
+      .catch((error)=>console.log(error));
+
+     
+  }
+
+  const navigate=()=>{
+    useNavigate("/");
+    console.log("Hi there");
   }
 
   if(employees !==null){
-    console.log(employees);
   return (
     <div className="container mt-3">
     <div className="card">
@@ -42,6 +56,7 @@ import { useParams } from "react-router-dom";
         <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
           Edit Employee
         </button>
+        <Link to='/' element={<AddEmployee/>} className="btn btn-success btn-sm">Back?</Link>
       </div>
       <div className="card-body">
           <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -63,7 +78,7 @@ import { useParams } from "react-router-dom";
                       <label htmlFor="floatingInput">Full Name</label>
                     </div>
                     <div className="form-floating col-6">
-                      <input type="text" value={employees.physicalAddress} name="phyAddress" className="form-control" id="floatingAddress"
+                      <input type="text" value={employees.physicalAddress} name="physicalAddress" className="form-control" id="floatingAddress"
                         onChange={getData}
                       />
                       <label htmlFor="floatingAddress">Physical Address</label>
@@ -71,7 +86,7 @@ import { useParams } from "react-router-dom";
                   </div>
                   <div className="row">
                     <div className="form-floating mb-3 col-6">
-                      <input type="email" value={employees.email} name="emailAddress" className="form-control" id="floatingInput"
+                      <input type="email" value={employees.email} name="email" className="form-control" id="floatingInput"
                         onChange={getData}
                       />
                       <label htmlFor="floatingInput">Email address</label>
@@ -100,8 +115,11 @@ import { useParams } from "react-router-dom";
                 </form>
               </div>
               <div className="modal-footer">
-                {/* <span className="text-success">{message.message}</span> */}
-                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <span className="text-success">{message?message.message:""}</span>
+                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
                 <button type="button" className="btn btn-primary"
                   onClick={handleData}
                 >

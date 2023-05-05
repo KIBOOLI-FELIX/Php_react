@@ -21,6 +21,7 @@ export default function AddEmployee(){
     .then((response)=>{
       console.log(response.data)
       setMessage(response.data);
+      
     })
     .catch((error)=>console.log(error));
  

@@ -5,6 +5,7 @@ import axiosClient from "../axio_client";
 
 const ViewEmployees=()=>{
 const [employees,setEmployees]=useState([]);
+const [message,setMessage]=useState(null);
   
     useEffect(()=>{
       getEmployee();
@@ -17,10 +18,20 @@ const [employees,setEmployees]=useState([]);
     })
     .catch((error)=>console.log(error))
   }
+
+  //funtion to delete user
+  const deleteUser=(id)=>{
+    axiosClient.delete(`/api?id=${id}`).then((response)=>{
+      console.log(response.data);
+      setMessage(response.data);
+      getEmployee();
+    })
+  }
  
   return(
     <div className="container">
       <h1 className="text-center text-success">List of Available Employee Data</h1>
+      <span className="text-warning">{message?message.message:""}</span>
       <table className="table table-bordered">
         <thead>
           <tr>
@@ -47,7 +58,7 @@ const [employees,setEmployees]=useState([]);
               <td>{employee.physicalAddress}</td>
               <td className="d-flex justify-content-between">
               <Link to={`employ/${employee.id}/edit`} className="btn btn-warning btn-sm">Edit</Link>
-              <Link to={`employ/${employee.id}/delete`} className="btn btn-danger btn-sm">Delete</Link>
+              <button onClick={()=>deleteUser(employee.id)} className="btn btn-danger btn-sm">Delete</button>
               </td>
             </tr>
             )

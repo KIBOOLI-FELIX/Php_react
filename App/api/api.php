@@ -33,10 +33,22 @@ switch($req_method){
     //getting data from the post request
     $requested_body=file_get_contents('php://input');
     $data=json_decode($requested_body,true);
-    $message=new PostController($data);
+    $message=new PostController($data,null,null);
     echo $message->savePost();
     break;
-
+  case "PUT":
+    // echo json_encode(['status'=>'success','message'=>'Employee Updated Successfully']);
+    $req_updateData=file_get_contents('php://input');
+    $updateData=json_decode($req_updateData,true);
+    $msgUpdate=new PostController(null,$updateData,null);
+    echo $msgUpdate->update();
+    break;
+  case "DELETE":
+    $queries=array();
+    parse_str($_SERVER['QUERY_STRING'],$queries);
+    $employId=$queries['id'];
+    $msgDelete=new PostController(null,null,$employId);
+    echo $msgDelete->delete();
 }
 
 
