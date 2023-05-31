@@ -1,6 +1,6 @@
 import axios from "axios";
 const axiosClient=axios.create({
-  baseURL:'http://localhost/testprojects/phpreact/App/api/',
+  baseURL:'http://localhost/projects/php_react/App/api/',
 }
 )
 export default axiosClient;

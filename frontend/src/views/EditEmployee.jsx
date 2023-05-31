@@ -2,11 +2,12 @@ import { useEffect,useState} from "react";
 import axiosClient from "../axio_client";
 import { useParams,Link} from "react-router-dom";
 import AddEmployee from "./AddEmployee";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
  const  EditEmployee=()=>{
 
   const [employees,setEmployees]=useState(null);
-  const [message,setMessage]=useState(null);
   
     useEffect(()=>{
       getEmployee();
@@ -17,6 +18,7 @@ import AddEmployee from "./AddEmployee";
     await axiosClient.get(`/api.php?id=${id.id}`)
     .then((response)=>{
       setEmployees(...response.data)
+
     })
     .catch((error)=>console.log(error))
   }
@@ -36,7 +38,17 @@ import AddEmployee from "./AddEmployee";
      axiosClient.put("/api",employees)
       .then((response)=>{
        console.log(response.data)
-         setMessage(response.data);
+        //  setMessage(response.data);
+        toast.success(response.data.message, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        });
       })
       .catch((error)=>console.log(error));
 
@@ -115,7 +127,6 @@ import AddEmployee from "./AddEmployee";
                 </form>
               </div>
               <div className="modal-footer">
-                <span className="text-success">{message?message.message:""}</span>
                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal"
                 >
                   Close
@@ -125,6 +136,7 @@ import AddEmployee from "./AddEmployee";
                 >
                   Update User
                 </button>
+                <ToastContainer/>
               </div>
             </div>
           </div>

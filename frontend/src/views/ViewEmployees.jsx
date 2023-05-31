@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { useEffect,useState} from "react";
 import axiosClient from "../axio_client";
-
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const ViewEmployees=()=>{
 const [employees,setEmployees]=useState([]);
 const [message,setMessage]=useState(null);
@@ -22,8 +22,18 @@ const [message,setMessage]=useState(null);
   //funtion to delete user
   const deleteUser=(id)=>{
     axiosClient.delete(`/api?id=${id}`).then((response)=>{
-      console.log(response.data);
-      setMessage(response.data);
+        toast.success(response.data.message, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        });
+      // console.log(response.data);
+      // setMessage(response.data);
       getEmployee();
     })
   }
@@ -65,6 +75,7 @@ const [message,setMessage]=useState(null);
           })}
         </tbody>
       </table>
+      <ToastContainer/>
     </div>
   )
 }

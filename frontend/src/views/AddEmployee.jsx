@@ -1,12 +1,11 @@
-import {useState} from "react"
+import {useEffect, useState} from "react"
 import ViewEmployees from "./ViewEmployees";
 import axiosClient from "../axio_client";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function AddEmployee(){
   const[payload,setPayload]=useState([]);
-  const[message,setMessage]=useState({});
-
   //function to collect data
   const getData=(event)=>{
     const field_name=event.target.name;
@@ -18,13 +17,23 @@ export default function AddEmployee(){
     console.log(payload)
     //sending data to the api
     axiosClient.post("/api",payload)
-    .then((response)=>{
-      console.log(response.data)
-      setMessage(response.data);
+    .then(async(response)=>{
+
+     toast.success(response.data.message, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        });
+      // setMessage(response.data.message);
       
     })
     .catch((error)=>console.log(error));
- 
+    
   }
 
 
@@ -97,7 +106,6 @@ export default function AddEmployee(){
                   </form>
                 </div>
                 <div className="modal-footer">
-                  <span className="text-success">{message.message}</span>
                   <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                   <button type="button" className="btn btn-primary"
                     onClick={handleData}
@@ -110,6 +118,7 @@ export default function AddEmployee(){
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   )
 }

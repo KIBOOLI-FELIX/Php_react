@@ -5,7 +5,7 @@ class Database {
   private $host='localhost';
   private $dbname='react_crud';
   private $username='root';
-  private $password='root';
+  private $password='';
   private $charset='utf8mb4';
   private $dsn;
   private $conn;
